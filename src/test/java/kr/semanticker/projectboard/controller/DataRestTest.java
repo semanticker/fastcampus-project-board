@@ -39,4 +39,60 @@ public class DataRestTest {
                 //.andDo(print());
         // Then
     }
+    @DisplayName("[api] 게시글 단건 조회")
+    @Test
+    void givenNothing_whenRequestingArticles_thenReturnArticleJsonResponse() throws Exception {
+        // Given
+
+        // When
+        // mvc.perform("/api/articles");
+        mvc.perform(get("/api/articles/1"))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.valueOf("application/hal+json")));
+                //.andDo(print());
+        // Then
+    }
+
+    @DisplayName("[api] 게시글 댓글 리스트 조회")
+    @Test
+    void givenNothing_whenRequestingArticleCommentsFormArticle_thenReturnArticleCommentsJsonResponse() throws Exception {
+        // Given
+
+        // When
+        // mvc.perform("/api/articles");
+        mvc.perform(get("/api/articles/1/articleComments"))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.valueOf("application/hal+json")));
+        //.andDo(print());
+        // Then
+    }
+
+    @DisplayName("[api] 게시글 댓글 리스트 조회")
+    @Test
+    void givenNothing_whenRequestingArticleComments_thenReturnArticleCommentsJsonResponse() throws Exception {
+        // Given
+
+        // When
+        // mvc.perform("/api/articles");
+        mvc.perform(get("/api/articleComments"))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.valueOf("application/hal+json")));
+        //.andDo(print());
+        // Then
+    }
+
+
+    @DisplayName("[api] 게시글 댓글 리스트 조회")
+    @Test
+    void givenNothing_whenRequestingArticleComment_thenReturnArticleCommentJsonResponse() throws Exception {
+        // Given
+
+        // When
+        // mvc.perform("/api/articles");
+        mvc.perform(get("/api/articleComments/2"))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.valueOf("application/hal+json")));
+        //.andDo(print());
+        // Then
+    }
 }
