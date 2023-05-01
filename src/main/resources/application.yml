@@ -32,6 +32,7 @@ spring:
   data.rest:
     base-path: /api
     detection-strategy: annotated
+
   # thymeleaf.cache: false
   # data.rest:
   #     base-path: /api
@@ -39,6 +40,8 @@ spring:
   config:
     activate:
       on-profile:
+  thymeleaf3:
+    decoupled-logic: true
 
 ---
 

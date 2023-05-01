@@ -34,6 +34,7 @@ dependencies {
     compileOnly 'org.projectlombok:lombok'
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
     annotationProcessor 'org.projectlombok:lombok'
+    annotationProcessor "org.springframework.boot:spring-boot-configuration-processor"
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
 
     //queryDSL 설정
@@ -46,6 +47,7 @@ dependencies {
     //annotationProcessor "com.querydsl:querydsl-apt:${dependencyManagement.importedProperties['querydsl.version']}:jpa"
     annotationProcessor "jakarta.annotation:jakarta.annotation-api" // java.lang.NoClassDefFoundError (javax.annotation.Generated) 대응 코드
     annotationProcessor "jakarta.persistence:jakarta.persistence-api"   // java.lang.NoClassDefFoundError (javax.annotation.Generated) 대응 코드
+
 }
 
 tasks.named('test') {
