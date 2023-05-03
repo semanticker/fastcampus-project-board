@@ -3,6 +3,7 @@ package kr.semanticker.projectboard.controller;
 import kr.semanticker.projectboard.config.SecurityConfig;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
@@ -18,7 +19,7 @@ public class AuthControllerTest {
 
     private final MockMvc mvc;
 
-    public AuthControllerTest(MockMvc mvc) {
+    public AuthControllerTest(@Autowired MockMvc mvc) {
         this.mvc = mvc;
     }
 
