@@ -1,5 +1,7 @@
 package kr.semanticker.projectboard.service;
 
+import kr.semanticker.projectboard.domain.type.SearchType;
+import kr.semanticker.projectboard.dto.ArticleDto;
 import kr.semanticker.projectboard.repository.ArticleRepository;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.DisplayName;
@@ -8,6 +10,8 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+
+import java.util.List;
 
 import static org.assertj.core.api.Assertions.*;
 
@@ -24,9 +28,13 @@ class ArticleServiceTest {
     @Test
     void givenSearchParameters_whenSearchingArticles_thenReturnsArticleLisg() {
         // Given
+        //SearchParameters param = SearchParameters.of(SearchType.TITLE, "search keyword");
 
         // When
+        List<ArticleDto> articles = sut.searchArticles(SearchType.TITLE, "search keyword"); // 제목, 본문, ID, 닉네임, 해시태그
 
         // Then
+        assertThat(articles).isNotNull();
+                // 검색 건수로 검증
     }
 }
