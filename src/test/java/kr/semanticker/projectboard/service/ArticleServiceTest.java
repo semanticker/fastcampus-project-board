@@ -10,6 +10,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.data.domain.Page;
 
 import java.util.List;
 
@@ -24,9 +25,10 @@ class ArticleServiceTest {
 
     @Mock private ArticleRepository articleRepository;
 
+
     @DisplayName("게시글을 검색하면, 게시글 리스트를 반환한다.")
     @Test
-    void givenSearchParameters_whenSearchingArticles_thenReturnsArticleLisg() {
+    void givenSearchParameters_whenSearchingArticles_thenReturnsArticleList() {
         // Given
         //SearchParameters param = SearchParameters.of(SearchType.TITLE, "search keyword");
 
@@ -35,6 +37,36 @@ class ArticleServiceTest {
 
         // Then
         assertThat(articles).isNotNull();
-                // 검색 건수로 검증
+        // 검색 건수로 검증
     }
+
+
+    @DisplayName("게시글을 검색하면, 게시글 페이지를 반환한다.")
+    @Test
+    void givenSearchParameters_whenSearchingArticlesPage_thenReturnsArticleList() {
+        // Given
+        //SearchParameters param = SearchParameters.of(SearchType.TITLE, "search keyword");
+
+        // When
+        Page<ArticleDto> articles = sut.searchArticlesPage(SearchType.TITLE, "search keyword"); // 제목, 본문, ID, 닉네임, 해시태그
+
+        // Then
+        assertThat(articles).isNotNull();
+        // 검색 건수로 검증
+    }
+
+    @DisplayName("게시글을 조회하면, 게시글을 반환한다.")
+    @Test
+    void givenArticleId_whenSearchingArticle_thenReturnsArticle() {
+        // Given
+        //SearchParameters param = SearchParameters.of(SearchType.TITLE, "search keyword");
+
+        // When
+        ArticleDto article = sut.searchArticle(1L); // 제목, 본문, ID, 닉네임, 해시태그
+
+        // Then
+        assertThat(article).isNotNull();
+    }
+
+
 }

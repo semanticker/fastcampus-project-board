@@ -4,6 +4,7 @@ import kr.semanticker.projectboard.domain.type.SearchType;
 import kr.semanticker.projectboard.dto.ArticleDto;
 import kr.semanticker.projectboard.repository.ArticleRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -22,5 +23,15 @@ public class ArticleService {
 
         return List.of(
         );
+    }
+    @Transactional(readOnly = true)
+    public Page<ArticleDto> searchArticlesPage(SearchType title, String searchKeyword) {
+
+        return Page.empty();
+    }
+
+    @Transactional(readOnly = true)
+    public ArticleDto searchArticle(long l) {
+        return null;
     }
 }
