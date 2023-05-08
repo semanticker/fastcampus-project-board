@@ -1,5 +1,6 @@
 package kr.semanticker.projectboard.service;
 
+import kr.semanticker.projectboard.domain.Article;
 import kr.semanticker.projectboard.domain.type.SearchType;
 import kr.semanticker.projectboard.dto.ArticleDto;
 import kr.semanticker.projectboard.repository.ArticleRepository;
@@ -7,14 +8,19 @@ import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.BDDMockito;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.data.domain.Page;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.BDDMockito.willDoNothing;
+import static org.mockito.BDDMockito.*;
 
 @DisplayName("비지니스 로직 - 게시글")
 @RequiredArgsConstructor
@@ -66,6 +72,29 @@ class ArticleServiceTest {
 
         // Then
         assertThat(article).isNotNull();
+    }
+
+    @DisplayName("게시글 정보를 입력하면, 게시글을 생성한다")
+    @Test
+    void givenArticleInfo_whenSavingArticle_thenSavesArticle() {
+        // Given
+        ArticleDto dto = ArticleDto.of(
+                LocalDateTime.now(),
+                "semanticker",
+                "title",
+                "content",
+                "hashtag"
+        );
+
+        willDoNothing().given(articleRepository.save(any(Article.class)));
+        given(articleRepository.save(any(Article.class)))
+
+        // When
+        sut.saveArticle();
+
+        // Then
+        then(articleRepository).should().save(any(Article.class));
+
     }
 
 
