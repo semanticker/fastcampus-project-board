@@ -3,6 +3,7 @@ package kr.semanticker.projectboard.service;
 import kr.semanticker.projectboard.domain.Article;
 import kr.semanticker.projectboard.domain.type.SearchType;
 import kr.semanticker.projectboard.dto.ArticleDto;
+import kr.semanticker.projectboard.dto.ArticleUpdateDto;
 import kr.semanticker.projectboard.repository.ArticleRepository;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.DisplayName;
@@ -86,16 +87,69 @@ class ArticleServiceTest {
                 "hashtag"
         );
 
-        willDoNothing().given(articleRepository.save(any(Article.class)));
-        given(articleRepository.save(any(Article.class)))
+        // 리턴값이 있는 경우
+        //willDoNothing().given(articleRepository.save(any(Article.class)));
+
+        // 리턴값이 있는 경우
+        given(articleRepository.save(any(Article.class))).willReturn(null);
 
         // When
-        sut.saveArticle();
+        sut.saveArticle(dto);
 
         // Then
         then(articleRepository).should().save(any(Article.class));
 
     }
+
+    @DisplayName("게시글 ID와 수정정보를 입력하면, 게시글을 생성한다")
+    @Test
+    void givenArticleIdAndInfo_whenUpdatingArticle_thenUpdatesArticle() {
+        // Given
+        ArticleUpdateDto dto = ArticleUpdateDto.of(
+                "title",
+                "content",
+                "#java"
+        );
+
+        // 리턴값이 있는 경우
+        //willDoNothing().given(articleRepository.save(any(Article.class)));
+
+        // 리턴값이 있는 경우
+        given(articleRepository.save(any(Article.class))).willReturn(null);
+
+        // When
+        sut.updateArticle(1L, dto);
+
+        // Then
+        then(articleRepository).should().save(any(Article.class));
+
+    }
+
+
+    @DisplayName("게시글 ID를 입력하면, 게시글을 삭제한다")
+    @Test
+    void givenArticleId_whenDeletingArticle_thenDeletesArticle() {
+        // Given
+        ArticleUpdateDto dto = ArticleUpdateDto.of(
+                "title",
+                "content",
+                "#java"
+        );
+
+        // 리턴값이 있는 경우
+        //willDoNothing().given(articleRepository.save(any(Article.class)));
+
+        // 리턴값이 있는 경우
+        BDDMockito.willDoNothing().given(articleRepository).delete(any(Article.class));
+
+        // When
+        sut.deleteArticle(1L);
+
+        // Then
+        then(articleRepository).should().delete(any(Article.class));
+
+    }
+
 
 
 }
