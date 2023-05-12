@@ -72,7 +72,7 @@ class JpaRepositoryTest {
         // Then
         long savedCount = articleRepository.count();
         assertThat(savedCount)
-                .isEqualTo(1001);
+                .isEqualTo(124);
     }
 
     @DisplayName("update 테스트")
