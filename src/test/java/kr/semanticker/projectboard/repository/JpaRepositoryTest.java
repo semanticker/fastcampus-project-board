@@ -6,13 +6,10 @@ import kr.semanticker.projectboard.domain.UserAccount;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.Import;
-import org.springframework.test.context.ActiveProfiles;
 
 import java.util.List;
-import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.*;
 
@@ -46,7 +43,7 @@ class JpaRepositoryTest {
 
     @DisplayName("select 테스트")
     @Test
-    void givenTestData_whenSelect_thenWorksFine() {
+    void givenTestData_whenSelecting_thenWorksFine() {
         // Given
 
         // When
@@ -55,7 +52,7 @@ class JpaRepositoryTest {
         // Then
         assertThat(articles)
                 .isNotNull()
-                .hasSize(1000);
+                .hasSize(123);
     }
 
     @DisplayName("insert 테스트")
@@ -72,13 +69,12 @@ class JpaRepositoryTest {
         // Then
         long savedCount = articleRepository.count();
         assertThat(savedCount)
-                .isEqualTo(124);
+                .isEqualTo(previousCount+1);
     }
 
     @DisplayName("update 테스트")
     @Test
     void givenTestData_whenUpdating_thenWorksFine() {
-
         // Given
         Article article = articleRepository.findById(1L).orElseThrow();
         String updatedHashtag = "#springboot";
@@ -90,10 +86,10 @@ class JpaRepositoryTest {
         // Then
         assertThat(savedArticle).hasFieldOrPropertyWithValue("hashtag", updatedHashtag);
     }
+
     @DisplayName("delete 테스트")
     @Test
     void givenTestData_whenDeleting_thenWorksFine() {
-
         // Given
         Article article = articleRepository.findById(1L).orElseThrow();
         long previousArticleCount = articleRepository.count();

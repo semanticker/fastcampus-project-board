@@ -23,9 +23,12 @@ class MainControllerTest {
 
     @Test
     void givenNothing_whenRequestingRootPage_thenRedirectsToArticlesPage() throws Exception {
+        // Given
+
+        // When & Then
         mvc.perform(get("/"))
                 .andExpect(status().isOk())
-                .andExpect(view().name("forward:articles"))
+                .andExpect(view().name("forward:/articles"))
                 .andExpect(forwardedUrl("/articles"))
                 .andDo(MockMvcResultHandlers.print());
     }

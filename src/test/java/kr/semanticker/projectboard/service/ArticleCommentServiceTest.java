@@ -23,18 +23,18 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.*;
 
-
-@DisplayName("비지니스 로직 - 댓글")
-@RequiredArgsConstructor
+@DisplayName("비즈니스 로직 - 댓글")
 @ExtendWith(MockitoExtension.class)
-public class ArticleCommentServiceTest {
+class ArticleCommentServiceTest {
+
     @InjectMocks private ArticleCommentService sut;
+
     @Mock private ArticleRepository articleRepository;
     @Mock private ArticleCommentRepository articleCommentRepository;
 
-    @DisplayName("게시글 아이디로 조회하면 해당하 댓글 리스트를 반환한다.")
+    @DisplayName("게시글 ID로 조회하면, 해당하는 댓글 리스트를 반환한다.")
     @Test
-    void givenArticleId_whenSearchArticleComments_thenReturnArticleComments() {
+    void givenArticleId_whenSearchingArticleComments_thenReturnsArticleComments() {
         // Given
         Long articleId = 1L;
         ArticleComment expected = createArticleComment("content");
@@ -51,12 +51,26 @@ public class ArticleCommentServiceTest {
 
     }
 
-
-
-
-    @DisplayName("댓글 저장을 시도했는데 게시글이 존재하지 없으면, 경고 로그를 찍고 아무것도 안한다.")
+    @DisplayName("댓글 정보를 입력하면, 댓글을 저장한다.")
     @Test
-    void givenNonexistArticle_whenSavingArticleComment_thenLogSituationAndDoesNothing() {
+    void givenArticleCommentInfo_whenSavingArticleComment_thenSavesArticleComment() {
+        // Given
+        ArticleCommentDto dto = createArticleCommentDto("댓글");
+        given(articleRepository.getReferenceById(dto.articleId())).willReturn(createArticle());
+        given(articleCommentRepository.save(any(ArticleComment.class))).willReturn(null);
+
+        // When
+        sut.saveArticleComment(dto);
+
+        // Then
+        then(articleRepository).should().getReferenceById(dto.articleId());
+        then(articleCommentRepository).should().save(any(ArticleComment.class));
+    }
+
+    @DisplayName("댓글 저장을 시도했는데 맞는 게시글이 없으면, 경고 로그를 찍고 아무것도 안 한다.")
+    @Test
+    void givenNonexistentArticle_whenSavingArticleComment_thenLogsSituationAndDoesNothing() {
+        // Given
         ArticleCommentDto dto = createArticleCommentDto("댓글");
         given(articleRepository.getReferenceById(dto.articleId())).willThrow(EntityNotFoundException.class);
 

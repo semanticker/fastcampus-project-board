@@ -21,8 +21,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureMockMvc
 @SpringBootTest
 public class DataRestTest {
-    private final MockMvc mvc;
 
+    private final MockMvc mvc;
 
     public DataRestTest(@Autowired MockMvc mvc) {
         this.mvc = mvc;
@@ -30,20 +30,20 @@ public class DataRestTest {
 
     @DisplayName("[api] 게시글 리스트 조회")
     @Test
-    void givenNothing_whenRequestingArticles_thenReturnArticlesJsonResponse() throws Exception {
+    void givenNothing_whenRequestingArticles_thenReturnsArticlesJsonResponse() throws Exception {
         // Given
 
-        // When
-        // mvc.perform("/api/articles");
+        // When & Then
         mvc.perform(get("/api/articles"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.valueOf("application/hal+json")));
                 //.andDo(print());
         // Then
     }
+
     @DisplayName("[api] 게시글 단건 조회")
     @Test
-    void givenNothing_whenRequestingArticles_thenReturnArticleJsonResponse() throws Exception {
+    void givenNothing_whenRequestingArticle_thenReturnsArticleJsonResponse() throws Exception {
         // Given
 
         // When
@@ -57,7 +57,7 @@ public class DataRestTest {
 
     @DisplayName("[api] 게시글 댓글 리스트 조회")
     @Test
-    void givenNothing_whenRequestingArticleCommentsFormArticle_thenReturnArticleCommentsJsonResponse() throws Exception {
+    void givenNothing_whenRequestingArticleCommentsFromArticle_thenReturnsArticleCommentsJsonResponse() throws Exception {
         // Given
 
         // When
@@ -69,9 +69,9 @@ public class DataRestTest {
         // Then
     }
 
-    @DisplayName("[api] 게시글 댓글 리스트 조회")
+    @DisplayName("[api] 댓글 리스트 조회")
     @Test
-    void givenNothing_whenRequestingArticleComments_thenReturnArticleCommentsJsonResponse() throws Exception {
+    void givenNothing_whenRequestingArticleComments_thenReturnsArticleCommentsJsonResponse() throws Exception {
         // Given
 
         // When
@@ -84,14 +84,14 @@ public class DataRestTest {
     }
 
 
-    @DisplayName("[api] 게시글 댓글 리스트 조회")
+    @DisplayName("[api] 댓글 단건 조회")
     @Test
     void givenNothing_whenRequestingArticleComment_thenReturnArticleCommentJsonResponse() throws Exception {
         // Given
 
         // When
         // mvc.perform("/api/articles");
-        mvc.perform(get("/api/articleComments/2"))
+        mvc.perform(get("/api/articleComments/1"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.valueOf("application/hal+json")));
         //.andDo(print());

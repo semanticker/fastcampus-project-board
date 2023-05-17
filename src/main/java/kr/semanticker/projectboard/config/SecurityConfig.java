@@ -17,11 +17,10 @@ public class SecurityConfig {
                         .anyRequest().authenticated()
                 )
                 .httpBasic(withDefaults());*/
-        http
+        return http
                 .authorizeHttpRequests(auth -> auth.anyRequest().permitAll())
-                .formLogin().and();
-        return http.build();
-
+                .formLogin().and()
+                .build();
     }
 
 }

@@ -3,13 +3,13 @@ package kr.semanticker.projectboard.service;
 import kr.semanticker.projectboard.domain.type.SearchType;
 import kr.semanticker.projectboard.dto.ArticleDto;
 import kr.semanticker.projectboard.dto.ArticleUpdateDto;
+import kr.semanticker.projectboard.dto.ArticleWithCommentsDto;
 import kr.semanticker.projectboard.repository.ArticleRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.List;
 
 @RequiredArgsConstructor
 @Transactional
@@ -19,29 +19,22 @@ public class ArticleService {
     private final ArticleRepository articleRepository;
 
     @Transactional(readOnly = true)
-    public List<ArticleDto> searchArticles(SearchType title, String searchKeyword) {
-
-        return List.of(
-        );
-    }
-    @Transactional(readOnly = true)
-    public Page<ArticleDto> searchArticlesPage(SearchType title, String searchKeyword) {
-
+    public Page<ArticleDto> searchArticles(SearchType searchType, String searchKeyword, Pageable pageable) {
         return Page.empty();
     }
 
     @Transactional(readOnly = true)
-    public ArticleDto searchArticle(long l) {
+    public ArticleWithCommentsDto getArticle(Long articleId) {
         return null;
     }
 
     public void saveArticle(ArticleDto dto) {
-
     }
 
-    public void updateArticle(long articleId, ArticleUpdateDto dto) {
+    public void updateArticle(ArticleDto dto) {
     }
 
     public void deleteArticle(long articleId) {
     }
+
 }

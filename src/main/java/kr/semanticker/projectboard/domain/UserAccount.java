@@ -3,19 +3,18 @@ package kr.semanticker.projectboard.domain;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 import java.util.Objects;
 
 @Getter
-@Setter
-@Table(
-        indexes = {
-                @Index(columnList = "userId"),
-                @Index(columnList = "email", unique = true),
-                @Index(columnList = "createdAt"),
-                @Index(columnList = "createdBy")
-        }
-)
+@ToString
+@Table(indexes = {
+        @Index(columnList = "userId"),
+        @Index(columnList = "email", unique = true),
+        @Index(columnList = "createdAt"),
+        @Index(columnList = "createdBy")
+})
 @Entity
 public class UserAccount extends AuditingFields {
     @Id
@@ -31,7 +30,7 @@ public class UserAccount extends AuditingFields {
 
     protected UserAccount() {}
 
-    public UserAccount(String userId, String userPassword, String email, String nickname, String memo) {
+    private UserAccount(String userId, String userPassword, String email, String nickname, String memo) {
         this.userId = userId;
         this.userPassword = userPassword;
         this.email = email;

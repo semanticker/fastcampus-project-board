@@ -5,7 +5,6 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
-import java.time.LocalDateTime;
 import java.util.LinkedHashSet;
 import java.util.Objects;
 import java.util.Set;
@@ -18,9 +17,9 @@ import java.util.Set;
         @Index(columnList = "createdAt"),
         @Index(columnList = "createdBy")
 })
-
 @Entity
 public class Article extends AuditingFields {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -29,7 +28,7 @@ public class Article extends AuditingFields {
     @JoinColumn(name = "user_account_id")
     private UserAccount userAccount;
 
-    @Setter @Column(nullable = false, length = 255) private String title; // 제목
+    @Setter @Column(nullable = false) private String title; // 제목
     @Setter @Column(nullable = false, length = 10000) private String content; // 본문
 
     @Setter @Column private String hashtag;  // 해시태그
@@ -42,13 +41,12 @@ public class Article extends AuditingFields {
 
     protected Article() {}
 
-    public Article(UserAccount userAccount, String title, String content, String hashtag) {
+    private Article(UserAccount userAccount, String title, String content, String hashtag) {
         this.userAccount = userAccount;
         this.title = title;
         this.content = content;
         this.hashtag = hashtag;
     }
-
 
     public static Article of(UserAccount userAccount, String title, String content, String hashtag) {
         return new Article(userAccount, title, content, hashtag);
