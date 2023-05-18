@@ -5,7 +5,6 @@ import kr.semanticker.projectboard.domain.Article;
 import kr.semanticker.projectboard.domain.UserAccount;
 import kr.semanticker.projectboard.domain.type.SearchType;
 import kr.semanticker.projectboard.dto.ArticleDto;
-import kr.semanticker.projectboard.dto.ArticleUpdateDto;
 import kr.semanticker.projectboard.dto.ArticleWithCommentsDto;
 import kr.semanticker.projectboard.dto.UserAccountDto;
 import kr.semanticker.projectboard.repository.ArticleRepository;
