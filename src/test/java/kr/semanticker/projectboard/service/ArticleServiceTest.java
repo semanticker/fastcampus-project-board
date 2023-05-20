@@ -8,11 +8,9 @@ import kr.semanticker.projectboard.dto.ArticleDto;
 import kr.semanticker.projectboard.dto.ArticleWithCommentsDto;
 import kr.semanticker.projectboard.dto.UserAccountDto;
 import kr.semanticker.projectboard.repository.ArticleRepository;
-import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.BDDMockito;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
@@ -20,7 +18,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import java.time.LocalDateTime;
-import java.util.List;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.*;
@@ -57,14 +54,14 @@ class ArticleServiceTest {
         SearchType searchType = SearchType.TITLE;
         String searchKeyword = "title";
         Pageable pageable = Pageable.ofSize(20);
-        given(articleRepository.findByTitle(searchKeyword, pageable)).willReturn(Page.empty());
+        given(articleRepository.findByTitleContaining(searchKeyword, pageable)).willReturn(Page.empty());
 
         // When
         Page<ArticleDto> articles = sut.searchArticles(searchType, searchKeyword, pageable);
 
         // Then
         assertThat(articles).isEmpty();
-        then(articleRepository).should().findByTitle(searchKeyword, pageable);
+        then(articleRepository).should().findByTitleContaining(searchKeyword, pageable);
     }
 
     @DisplayName("게시글을 조회하면, 게시글을 반환한다.")
@@ -136,7 +133,7 @@ class ArticleServiceTest {
         then(articleRepository).should().getReferenceById(dto.id());
     }
 
-    @DisplayName("없는 게시글의 수정 정보를 입력하면, 경고 로그를 찍고 아무 것도 하지 않는다.")
+    @DisplayName("없는 게시글의 수정 정보를 입력하면, 경고 로그를 찍고 아무묵 것도 하지 않는다.")
     @Test
     void givenNonexistentArticleInfo_whenUpdatingArticle_thenLogsWarningAndDoesNothing() {
         // Given
