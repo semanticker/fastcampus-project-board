@@ -197,7 +197,7 @@ class ArticleServiceTest {
     void givenNothing_whenCalling_thenReturnsHashtags() {
         // Given
         List<String> expectedHashtags = List.of("#java", "#spring", "#boot");
-        given(articleRepository.findAllDistinctHashtags()).will(expectedHashtags);
+        given(articleRepository.findAllDistinctHashtags()).willReturn(expectedHashtags);
 
         // When
         List<String> actualHashtags = sut.getHashtag();
