@@ -43,7 +43,7 @@ public class ArticleService {
     public ArticleWithCommentsDto getArticle(Long articleId) {
         return articleRepository.findById(articleId)
                 .map(ArticleWithCommentsDto::from)
-                .orElseThrow(()-> new EntityNotFoundException("게시글이 없습니다 - articleId:" + articleId));
+                .orElseThrow(()-> new EntityNotFoundException("게시글이 없습니다 - articleId: " + articleId));
         //return null;
     }
 
