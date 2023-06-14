@@ -1,6 +1,7 @@
 package kr.semanticker.projectboard.repository.querydsl;
 
 import com.querydsl.jpa.JPQLQuery;
+import kr.semanticker.projectboard.domain.Article;
 import kr.semanticker.projectboard.domain.QArticle;
 import org.springframework.data.jpa.repository.support.QuerydslRepositorySupport;
 
@@ -8,8 +9,8 @@ import java.util.List;
 
 public class ArticleRepositoryCustomImpl extends QuerydslRepositorySupport implements ArticleRepositoryCustom {
 
-    public ArticleRepositoryCustomImpl(Class<?> domainClass) {
-        super(domainClass);
+    public ArticleRepositoryCustomImpl() {
+        super(Article.class);
     }
 
     @Override
