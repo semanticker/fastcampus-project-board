@@ -46,11 +46,12 @@ public class ArticleCommentService {
                 articleComment.setContent(dto.content());
             }
         } catch (EntityNotFoundException e) {
-            log.warn("댓글 업데이트 실패. 댓글의 게시글을 찾을 수 없습니다 - dto: {}", dto);
+            log.warn("댓글 업데이트 실패. 댓글을 찾을 수 없습니다 - dto: {}", dto);
         }
     }
 
     public void deleteArticleComment(Long articleCommentId) {
         articleCommentRepository.deleteById(articleCommentId);
     }
+
 }

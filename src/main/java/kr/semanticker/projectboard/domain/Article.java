@@ -11,7 +11,7 @@ import java.util.Set;
 
 @Getter
 @ToString(callSuper = true)
-@Table( indexes = {
+@Table(indexes = {
         @Index(columnList = "title"),
         @Index(columnList = "hashtag"),
         @Index(columnList = "createdAt"),

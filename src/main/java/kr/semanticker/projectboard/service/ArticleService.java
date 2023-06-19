@@ -8,7 +8,6 @@ import kr.semanticker.projectboard.dto.ArticleWithCommentsDto;
 import kr.semanticker.projectboard.repository.ArticleRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -43,8 +42,7 @@ public class ArticleService {
     public ArticleWithCommentsDto getArticle(Long articleId) {
         return articleRepository.findById(articleId)
                 .map(ArticleWithCommentsDto::from)
-                .orElseThrow(()-> new EntityNotFoundException("게시글이 없습니다 - articleId: " + articleId));
-        //return null;
+                .orElseThrow(() -> new EntityNotFoundException("게시글이 없습니다 - articleId: " + articleId));
     }
 
     public void saveArticle(ArticleDto dto) {
@@ -73,6 +71,10 @@ public class ArticleService {
         articleRepository.deleteById(articleId);
     }
 
+    public long getArticleCount() {
+        return articleRepository.count();
+    }
+
     @Transactional(readOnly = true)
     public Page<ArticleDto> searchArticlesViaHashtag(String hashtag, Pageable pageable) {
         if (hashtag == null || hashtag.isBlank()) {
@@ -82,7 +84,7 @@ public class ArticleService {
         return articleRepository.findByHashtag(hashtag, pageable).map(ArticleDto::from);
     }
 
-    public List<String> getHashtag() {
+    public List<String> getHashtags() {
         return articleRepository.findAllDistinctHashtags();
     }
 }

@@ -10,8 +10,10 @@ import java.util.Optional;
 @EnableJpaAuditing
 @Configuration
 public class JpaConfig {
+
     @Bean
     public AuditorAware<String> auditorAware() {
         return () -> Optional.of("semanticker"); // TODO: 스프링 시큐리티로 인증기능을 붙이게 될 때, 수정하자
     }
+
 }
