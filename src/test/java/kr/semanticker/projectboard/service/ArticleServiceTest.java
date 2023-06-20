@@ -200,7 +200,7 @@ class ArticleServiceTest {
         given(articleRepository.findAllDistinctHashtags()).willReturn(expectedHashtags);
 
         // When
-        List<String> actualHashtags = sut.getHashtag();
+        List<String> actualHashtags = sut.getHashtags();
 
         // Then
         assertThat(actualHashtags).isEqualTo(expectedHashtags);
@@ -244,7 +244,6 @@ class ArticleServiceTest {
 
     private UserAccountDto createUserAccountDto() {
         return UserAccountDto.of(
-                1L,
                 "uno",
                 "password",
                 "uno@mail.com",

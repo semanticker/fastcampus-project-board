@@ -1,6 +1,5 @@
 package kr.semanticker.projectboard.controller;
 
-import kr.semanticker.projectboard.config.SecurityConfig;
 import kr.semanticker.projectboard.domain.type.SearchType;
 import kr.semanticker.projectboard.dto.ArticleWithCommentsDto;
 import kr.semanticker.projectboard.dto.UserAccountDto;
@@ -31,7 +30,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @DisplayName("View 컨트롤러 - 게시글")
-@Import(SecurityConfig.class)
+@Import(com.fastcampus.projectboard.config.SecurityConfig.class)
 @WebMvcTest(ArticleController.class)
 class ArticleControllerTest {
 
@@ -157,7 +156,7 @@ class ArticleControllerTest {
         // Given
         List<String> hashtags = List.of("#java", "#spring", "#boot");
         given(articleService.searchArticlesViaHashtag(eq(null), any(Pageable.class))).willReturn(Page.empty());
-        given(articleService.getHashtag()).willReturn(hashtags);
+        given(articleService.getHashtags()).willReturn(hashtags);
         given(paginationService.getPaginationBarNumbers(anyInt(), anyInt())).willReturn(List.of(1, 2, 3, 4, 5));
 
         // When & Then
@@ -171,7 +170,7 @@ class ArticleControllerTest {
                 .andExpect(model().attribute("searchType", SearchType.HASHTAG));
 
         then(articleService).should().searchArticlesViaHashtag(eq(null), any(Pageable.class));
-        then(articleService).should().getHashtag();
+        then(articleService).should().getHashtags();
         then(paginationService).should().getPaginationBarNumbers(anyInt(), anyInt());
     }
 
@@ -184,7 +183,7 @@ class ArticleControllerTest {
         // Given
         given(articleService.searchArticlesViaHashtag(eq(hashtag), any(Pageable.class))).willReturn(Page.empty());
         given(paginationService.getPaginationBarNumbers(anyInt(), anyInt())).willReturn(List.of(1, 2, 3, 4, 5));
-        given(articleService.getHashtag()).willReturn(hashtags);
+        given(articleService.getHashtags()).willReturn(hashtags);
 
         // When & Then
         mvc.perform(
@@ -199,7 +198,7 @@ class ArticleControllerTest {
                 .andExpect(model().attributeExists("searchType"));
 
         then(articleService).should().searchArticlesViaHashtag(eq(hashtag), any(Pageable.class));
-        then(articleService).should().getHashtag();
+        then(articleService).should().getHashtags();
         then(paginationService).should().getPaginationBarNumbers(anyInt(), anyInt());
     }
 
@@ -220,7 +219,6 @@ class ArticleControllerTest {
 
     private UserAccountDto createUserAccountDto() {
         return UserAccountDto.of(
-                1L,
                 "uno",
                 "password",
                 "uno@mail.com",
