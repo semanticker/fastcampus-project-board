@@ -1,4 +1,4 @@
-package com.fastcampus.projectboard.config;
+package kr.semanticker.projectboard.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
