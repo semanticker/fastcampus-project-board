@@ -9,7 +9,7 @@ import java.util.Objects;
 
 @Getter
 @ToString(callSuper = true)
-@Table( indexes = {
+@Table(indexes = {
         @Index(columnList = "content"),
         @Index(columnList = "createdAt"),
         @Index(columnList = "createdBy")
@@ -22,7 +22,10 @@ public class ArticleComment extends AuditingFields {
     private Long id;
 
     @Setter @ManyToOne(optional = false) private Article article; // 게시글 (ID)
-    @Setter @ManyToOne(optional = false) @JoinColumn(name = "user_account_id") private UserAccount userAccount;
+    @Setter
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "userId") private UserAccount userAccount; // 유저 정보 (ID)
+
     @Setter @Column(nullable = false, length = 500) private String content; // 본문
 
 
@@ -48,6 +51,6 @@ public class ArticleComment extends AuditingFields {
 
     @Override
     public int hashCode() {
-        return Objects.hash(getId());
+        return Objects.hash(id);
     }
 }

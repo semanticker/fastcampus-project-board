@@ -11,7 +11,7 @@ import java.util.Set;
 
 @Getter
 @ToString(callSuper = true)
-@Table( indexes = {
+@Table(indexes = {
         @Index(columnList = "title"),
         @Index(columnList = "hashtag"),
         @Index(columnList = "createdAt"),
@@ -24,14 +24,15 @@ public class Article extends AuditingFields {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Setter @ManyToOne(optional = false)
-    @JoinColumn(name = "user_account_id")
-    private UserAccount userAccount;
+    @Setter
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "userId")
+    private UserAccount userAccount; // 유저 정보 (ID)
 
     @Setter @Column(nullable = false) private String title; // 제목
     @Setter @Column(nullable = false, length = 10000) private String content; // 본문
 
-    @Setter @Column private String hashtag;  // 해시태그
+    @Setter private String hashtag; // 해시태그
 
     @ToString.Exclude
     @OrderBy("createdAt DESC")
@@ -62,6 +63,6 @@ public class Article extends AuditingFields {
 
     @Override
     public int hashCode() {
-        return Objects.hash(getId());
+        return Objects.hash(id);
     }
 }

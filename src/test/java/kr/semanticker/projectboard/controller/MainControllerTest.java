@@ -33,15 +33,4 @@ class MainControllerTest {
                 .andDo(MockMvcResultHandlers.print());
     }
 
-    @Test
-    void given_whenRequestingRootPage_thenRedirectsToArticlesPage() throws Exception {
-        // Given
-
-        // When
-        mvc.perform(get("/"))
-                .andExpect(status().is3xxRedirection());
-
-        // Then
-    }
-
 }

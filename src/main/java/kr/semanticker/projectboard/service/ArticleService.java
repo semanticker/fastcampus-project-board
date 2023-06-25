@@ -2,13 +2,14 @@ package kr.semanticker.projectboard.service;
 
 import jakarta.persistence.EntityNotFoundException;
 import kr.semanticker.projectboard.domain.Article;
-import kr.semanticker.projectboard.domain.type.SearchType;
+import kr.semanticker.projectboard.domain.UserAccount;
+import kr.semanticker.projectboard.domain.constant.SearchType;
 import kr.semanticker.projectboard.dto.ArticleDto;
 import kr.semanticker.projectboard.dto.ArticleWithCommentsDto;
 import kr.semanticker.projectboard.repository.ArticleRepository;
+import kr.semanticker.projectboard.repository.UserAccountRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -23,6 +24,7 @@ import java.util.List;
 public class ArticleService {
 
     private final ArticleRepository articleRepository;
+    private final UserAccountRepository userAccountRepository;
 
     @Transactional(readOnly = true)
     public Page<ArticleDto> searchArticles(SearchType searchType, String searchKeyword, Pageable pageable) {
@@ -40,29 +42,29 @@ public class ArticleService {
     }
 
     @Transactional(readOnly = true)
-    public ArticleWithCommentsDto getArticle(Long articleId) {
+    public ArticleWithCommentsDto getArticleWithComments(Long articleId) {
         return articleRepository.findById(articleId)
                 .map(ArticleWithCommentsDto::from)
-                .orElseThrow(()-> new EntityNotFoundException("게시글이 없습니다 - articleId: " + articleId));
-        //return null;
+                .orElseThrow(() -> new EntityNotFoundException("게시글이 없습니다 - articleId: " + articleId));
+    }
+
+    @Transactional(readOnly = true)
+    public ArticleDto getArticle(Long articleId) {
+        return articleRepository.findById(articleId)
+                .map(ArticleDto::from)
+                .orElseThrow(() -> new EntityNotFoundException("게시글이 없습니다 - articleId: " + articleId));
     }
 
     public void saveArticle(ArticleDto dto) {
-        articleRepository.save(dto.toEntity());
+        UserAccount userAccount = userAccountRepository.getReferenceById(dto.userAccountDto().userId());
+        articleRepository.save(dto.toEntity(userAccount));
     }
 
-    public void updateArticle(ArticleDto dto) {
+    public void updateArticle(Long articleId, ArticleDto dto) {
         try {
-            Article article = articleRepository.getReferenceById(dto.id());
-
-            if (dto.title() != null) {
-                article.setTitle(dto.title());
-            }
-
-            if (dto.content() != null) {
-                article.setContent(dto.content());
-            }
-
+            Article article = articleRepository.getReferenceById(articleId);
+            if (dto.title() != null) { article.setTitle(dto.title()); }
+            if (dto.content() != null) { article.setContent(dto.content()); }
             article.setHashtag(dto.hashtag());
         } catch (EntityNotFoundException e) {
             log.warn("게시글 업데이트 실패. 게시글을 찾을 수 없습니다 - dto: {}", dto);
@@ -71,6 +73,10 @@ public class ArticleService {
 
     public void deleteArticle(long articleId) {
         articleRepository.deleteById(articleId);
+    }
+
+    public long getArticleCount() {
+        return articleRepository.count();
     }
 
     @Transactional(readOnly = true)
@@ -82,7 +88,7 @@ public class ArticleService {
         return articleRepository.findByHashtag(hashtag, pageable).map(ArticleDto::from);
     }
 
-    public List<String> getHashtag() {
+    public List<String> getHashtags() {
         return articleRepository.findAllDistinctHashtags();
     }
 }
