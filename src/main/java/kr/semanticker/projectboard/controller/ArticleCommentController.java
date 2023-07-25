@@ -1,7 +1,6 @@
 package kr.semanticker.projectboard.controller;
 
 
-import kr.semanticker.projectboard.dto.UserAccountDto;
 import kr.semanticker.projectboard.dto.request.ArticleCommentRequest;
 import kr.semanticker.projectboard.dto.security.BoardPrincipal;
 import kr.semanticker.projectboard.service.ArticleCommentService;

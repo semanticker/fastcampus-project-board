@@ -1,6 +1,5 @@
 package kr.semanticker.projectboard.controller;
 
-import kr.semanticker.projectboard.config.SecurityConfig;
 import kr.semanticker.projectboard.config.TestSecurityConfig;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

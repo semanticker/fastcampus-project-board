@@ -2,7 +2,6 @@ package kr.semanticker.projectboard.dto.response;
 
 import kr.semanticker.projectboard.dto.ArticleWithCommentsDto;
 
-import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.LinkedHashSet;
 import java.util.Set;

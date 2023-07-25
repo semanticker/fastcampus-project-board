@@ -1,6 +1,5 @@
 package kr.semanticker.projectboard.repository;
 
-import kr.semanticker.projectboard.config.JpaConfig;
 import kr.semanticker.projectboard.domain.Article;
 import kr.semanticker.projectboard.domain.UserAccount;
 import org.junit.jupiter.api.DisplayName;

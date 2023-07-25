@@ -1,17 +1,13 @@
 package kr.semanticker.projectboard.controller;
 
-import kr.semanticker.projectboard.config.SecurityConfig;
 import kr.semanticker.projectboard.config.TestSecurityConfig;
-import kr.semanticker.projectboard.domain.ArticleComment;
 import kr.semanticker.projectboard.dto.ArticleCommentDto;
 import kr.semanticker.projectboard.dto.request.ArticleCommentRequest;
 import kr.semanticker.projectboard.service.ArticleCommentService;
-import kr.semanticker.projectboard.service.ArticleService;
 import kr.semanticker.projectboard.service.PaginationService;
 import kr.semanticker.projectboard.util.FormDataEncoder;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;

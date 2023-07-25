@@ -9,7 +9,6 @@ import kr.semanticker.projectboard.dto.UserAccountDto;
 import kr.semanticker.projectboard.repository.ArticleCommentRepository;
 import kr.semanticker.projectboard.repository.ArticleRepository;
 import kr.semanticker.projectboard.repository.UserAccountRepository;
-import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

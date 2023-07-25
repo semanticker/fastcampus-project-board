@@ -2,7 +2,6 @@ package kr.semanticker.projectboard.controller;
 
 import kr.semanticker.projectboard.domain.constant.FormStatus;
 import kr.semanticker.projectboard.domain.constant.SearchType;
-import kr.semanticker.projectboard.dto.UserAccountDto;
 import kr.semanticker.projectboard.dto.request.ArticleRequest;
 import kr.semanticker.projectboard.dto.response.ArticleResponse;
 import kr.semanticker.projectboard.dto.response.ArticleWithCommentsResponse;

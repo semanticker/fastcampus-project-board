@@ -3,7 +3,6 @@ package kr.semanticker.projectboard.dto.response;
 
 import kr.semanticker.projectboard.dto.ArticleDto;
 
-import java.io.Serializable;
 import java.time.LocalDateTime;
 
 public record ArticleResponse(

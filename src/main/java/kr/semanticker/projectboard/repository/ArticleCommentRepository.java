@@ -2,7 +2,6 @@ package kr.semanticker.projectboard.repository;
 
 import com.querydsl.core.types.dsl.DateTimeExpression;
 import com.querydsl.core.types.dsl.StringExpression;
-import kr.semanticker.projectboard.domain.Article;
 import kr.semanticker.projectboard.domain.ArticleComment;
 import kr.semanticker.projectboard.domain.QArticleComment;
 import org.springframework.data.jpa.repository.JpaRepository;
