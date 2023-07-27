@@ -65,3 +65,22 @@ Spring Boot
 ## 릴리즈
 태깅을 먼저 하고 릴리즈 탭에서 버전을 입력하고 릴리즈 수행
 
+
+
+# 고도화
+
+## 예상하는 세부 기능들
+
+* 대댓글 도메인 설계
+* 해시태그 기능 개선을 위한 게시글 도메인의 수정 여부 검토
+* 관련 비지니스 로직과 테스트 변경
+* 인증 기능 업데이트 : OAuth 2.0 + Kakao 로그인
+* 웹화면 변경
+  * 게시판 페이지: 대댓글 표현
+  * 로그인 페이지 : Kakao 로그인 화면으로 변경
+* 추가 의존성 조사 및 선택
+  * Spring Initializr - OAuth2 Client, Valut Configuration
+  * Swagger UI - Springdoc-openapi
+  
+
+
