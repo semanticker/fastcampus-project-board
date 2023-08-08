@@ -1,6 +1,7 @@
 package kr.semanticker.projectboard.repository.querydsl;
 
 import kr.semanticker.projectboard.domain.Hashtag;
+import kr.semanticker.projectboard.domain.QHashtag;
 import org.springframework.data.jpa.repository.support.QuerydslRepositorySupport;
 
 import java.util.List;
@@ -18,6 +19,5 @@ public class HashtagRepositoryCustomImpl extends QuerydslRepositorySupport imple
         return from(hashtag)
                 .select(hashtag.hashtagName)
                 .fetch();
-        return null;
     }
 }

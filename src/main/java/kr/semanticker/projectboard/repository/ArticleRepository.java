@@ -33,7 +33,7 @@ public interface ArticleRepository extends
         // 선택적 검색이 가능하도록 변경
         // 모든 검색 키워드 활성화를 비활성화
         bindings.excludeUnlistedProperties(true);
-        bindings.including(root.title, root.content, root.hashtag, root.createdAt, root.createdBy);
+        bindings.including(root.title, root.content, root.hashtags, root.createdAt, root.createdBy);
         // 이그젝트 매치
         // bindings.bind(root.title).first(((path, value) -> path.eq(value)));
         // 이그젝트 매치2
@@ -43,7 +43,7 @@ public interface ArticleRepository extends
         //bindings.bind(root.title).first(StringExpression::likeIgnoreCase); // like '${v}'
         bindings.bind(root.title).first(StringExpression::containsIgnoreCase); // like '%${v}%'
         bindings.bind(root.content).first(StringExpression::containsIgnoreCase); // like '%${v}%'
-        bindings.bind(root.hashtag).first(StringExpression::containsIgnoreCase); // like '%${v}%'
+        bindings.bind(root.hashtags.any().hashtagName).first(StringExpression::containsIgnoreCase); // like '%${v}%'
         bindings.bind(root.createdAt).first(DateTimeExpression::eq); // like '%${v}%'
         bindings.bind(root.createdBy).first(StringExpression::containsIgnoreCase); // like '%${v}%'
 
