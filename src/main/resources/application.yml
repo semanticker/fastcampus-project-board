@@ -14,9 +14,14 @@ spring:
 #    password: password
 #    driver-class-name: com.mysql.cj.jdbc.Driver
 
-    url: jdbc:h2:mem:testdb;mode=mysql
-    username: sa
-    driverClassName: org.h2.Driver
+    #url: jdbc:mysql://localhost:3306/board
+    url: jdbc:postgresql://localhost:5432/board
+    #username: uno
+    username: boarder
+    #password: thisisTESTpw!#%&
+    password: 1234
+    #driver-class-name: com.mysql.cj.jdbc.Driver
+    driver-class-name: org.postgresql.Driver
 
   jpa:
     defer-datasource-initialization: true
@@ -46,7 +51,7 @@ spring:
 ---
 
 spring:
-  config.activate.on-profile: testdb
+  config.activate. on-profile: testdb
 #  datasource:
 #    url: jdbc:h2:mem:board;mode=mysql
 #    driverClassName: org.h2.Driver
