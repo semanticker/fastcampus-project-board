@@ -81,6 +81,40 @@ Spring Boot
 * 추가 의존성 조사 및 선택
   * Spring Initializr - OAuth2 Client, Valut Configuration
   * Swagger UI - Springdoc-openapi
-  
 
+
+# PostgreSQL 설치(MAC에서)
+
+> brew services start postgresql
+
+> psql postgres userid
+
+postgres=#
+
+Select * from pg_user;
+
+
+userid@localhost ~ % psql board
+psql (14.9 (Homebrew))
+Type "help" for help.
+
+board=# conninfo
+board-# \conninfo
+You are connected to database "board" as user "userid" via socket in "/tmp" at port "5432".
+board-#
+
+
+create user boarder with password ‘1234’;
+
+Show list of relations
+\d
+
+Show list of roles
+
+board=# \du
+List of roles
+Role name  |                         Attributes                         | Member of
+-------------+------------------------------------------------------------+-----------
+userid | Superuser, Create role, Create DB, Replication, Bypass RLS | {}
+boarder     | 
 
