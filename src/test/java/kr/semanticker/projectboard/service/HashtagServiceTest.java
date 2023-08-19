@@ -1,5 +1,6 @@
 package kr.semanticker.projectboard.service;
 
+import kr.semanticker.projectboard.domain.Hashtag;
 import kr.semanticker.projectboard.repository.HashtagRepository;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -13,12 +14,14 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import javax.inject.Inject;
 
+import java.util.List;
 import java.util.Set;
 import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.in;
 import static org.junit.jupiter.params.provider.Arguments.arguments;
+import static org.mockito.BDDMockito.given;
 import static org.mockito.BDDMockito.then;
 
 @DisplayName("비지니스 로직 - 해시태그")
@@ -31,10 +34,9 @@ class HashtagServiceTest {
     @Mock
     private HashtagRepository hashtagRepository;
 
-    @DisplayName("본문을 파싱하면, 해시태그 이림들을 중복 없이 반환한다.")
+    @DisplayName("본문을 파싱하면, 해시태그 이름들을 중복 없이 반환한다.")
     @MethodSource
     @ParameterizedTest(name = "[{index}] \"{0}\" => \"{1}")
-    @Test
     void givenContent_whenParsing_thenReturnsUniqueHashtagNames(String input, Set<String> expected) {
         // Given
 
@@ -88,8 +90,26 @@ class HashtagServiceTest {
                 arguments("아주 긴 글~~~~~~~~~~~~~~~~~~~~~#java#스프링", Set.of("java", "스프링")),
                 arguments("아주 긴 글~~~~~~#java#스프링~~~~~~~~~~~~~~~", Set.of("java", "스프링")),
                 arguments("아주 긴 글~~~~~~#java~~~~~~~#스프링~~~~~~~~", Set.of("java", "스프링"))
-
-
         );
+    }
+
+    @DisplayName("해시태그 이름드을 입력하면, 저장된 해시태그 중 이름에 매칭되는 것들을 중복 없이 반환한다.")
+    @Test
+    void givenHashtagNames_whenFindingHashtags_thenReturnsHashtagSet() {
+
+        // Given
+        Set<String> hashtagNames = Set.of("java", "spirng", "boots");
+        given(hashtagRepository.findByHashtagNameIn(hashtagNames)).willReturn(List.of(
+                Hashtag.of("java"),
+                Hashtag.of("spring")
+        ));
+
+
+        // When
+        Set<Hashtag> hashtags = sut.findHashtagsByNames(hashtagNames);
+
+        // Then
+        assertThat(hashtags).hasSize(2);
+        then(hashtagRepository).should().findByHashtagNameIn(hashtagNames);
     }
 }
