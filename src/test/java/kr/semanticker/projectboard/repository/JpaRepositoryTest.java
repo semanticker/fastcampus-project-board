@@ -1,8 +1,10 @@
 package kr.semanticker.projectboard.repository;
 
 import kr.semanticker.projectboard.domain.Article;
+import kr.semanticker.projectboard.domain.ArticleComment;
 import kr.semanticker.projectboard.domain.Hashtag;
 import kr.semanticker.projectboard.domain.UserAccount;
+import org.assertj.core.api.InstanceOfAssertFactories;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -122,6 +124,37 @@ class JpaRepositoryTest {
                 .isEqualTo(previousArticleCommentCount-deletedCommentsSize);
     }
 
+
+    @DisplayName("대댓글 조회 테스트")
+    @Test
+    void givenParentCommentId_whenSelecting_thenReturnsChildComments() {
+        // Given
+
+        // When
+        Optional<ArticleComment> parentComment = articleCommentRepository.findById(1L);
+
+
+        // Then
+        assertThat(parentComment).get()
+                .hasFieldOrPropertyWithValue("parentCommentId", null)
+                .extracting("childComments", InstanceOfAssertFactories.COLLECTION)
+                .hasSize(4);
+    }
+
+    @DisplayName("댓글 삭제와 대댓글 전체 연동 삭제 테스트 - 댓글 ID + 유저 ID")
+    @Test
+    void givenArticleCommentIdHavingChildCommentsAndUserId_whenDeletingParentComment_thenDeletesEveryComment() {
+        // Given
+        long previousArticleCommentCount = articleCommentRepository.count();
+
+        // When
+        articleCommentRepository.deleteByIdAndUserAccount_UserId(1L, "uno");
+
+        // Then
+        assertThat(articleCommentRepository.count()).isEqualTo(previousArticleCommentCount-5);
+    }
+
+
     @DisplayName("[Querydsl] 전체 hashtag 리스트에서 이름만 조회하기")
     @Test
     void givenNothing_whenQueryingHashtags_thenReturnsHashtagNames() {
@@ -156,7 +189,6 @@ class JpaRepositoryTest {
         assertThat(articlePage.getTotalElements()).isEqualTo(17);
         assertThat(articlePage.getTotalPages()).isEqualTo(4);
     }
-
 
     @EnableJpaAuditing
     @TestConfiguration
