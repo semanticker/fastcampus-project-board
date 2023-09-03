@@ -46,7 +46,6 @@ class ArticleCommentControllerTest {
         this.formDataEncoder = formDataEncoder;
     }
 
-
     @WithUserDetails(value = "test", setupBefore = TestExecutionEvent.TEST_EXECUTION)
     @DisplayName("[view][POST] 댓글 등록 - 정상 호출")
     @Test
@@ -75,6 +74,31 @@ class ArticleCommentControllerTest {
     void givenArticleCommentIdToDelete_whenRequesting_thenDeletesArticleComment() throws Exception {
         // Given
         long articleId = 1L;
+        long articleCommentId = 1L;
+        String userId = "test";
+        willDoNothing().given(articleCommentService).deleteArticleComment(articleCommentId, userId);
+
+        // When & Then
+        mvc.perform(
+                        post("/comments/" + articleCommentId + "/delete")
+                                .contentType(MediaType.APPLICATION_FORM_URLENCODED)
+                                .content(formDataEncoder.encode(Map.of("articleId", articleId)))
+                                .with(csrf())
+                )
+                .andExpect(status().is3xxRedirection())
+                .andExpect(view().name("redirect:/articles/" + articleId))
+                .andExpect(redirectedUrl("/articles/" + articleId));
+        then(articleCommentService).should().deleteArticleComment(articleCommentId, userId);
+    }
+    @WithUserDetails(value="unoTest", setupBefore = TestExecutionEvent.TEST_EXECUTION)
+    @DisplayName("[view][GET] 대댓글 삭제 - 정상 호출")
+    @Test
+    void givenArticleCommentInfoWithParentCommentId_whenRequesting_thenSaveNewChildComment() throws Exception {
+        // Given
+        long articleId = 1L;
+        ArticleCommentRequest request = ArticleCommentRequest.of(articleId, 1L, "test comment");
+        willDoNothing().given(articleCommentService).saveArticleComment(any(ArticleCommentDto.class));
+
         long articleCommentId = 1L;
         String userId = "test";
         willDoNothing().given(articleCommentService).deleteArticleComment(articleCommentId, userId);
