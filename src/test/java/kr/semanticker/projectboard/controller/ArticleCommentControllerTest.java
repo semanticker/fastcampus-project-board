@@ -90,29 +90,28 @@ class ArticleCommentControllerTest {
                 .andExpect(redirectedUrl("/articles/" + articleId));
         then(articleCommentService).should().deleteArticleComment(articleCommentId, userId);
     }
+
+
+
     @WithUserDetails(value="unoTest", setupBefore = TestExecutionEvent.TEST_EXECUTION)
-    @DisplayName("[view][GET] 대댓글 삭제 - 정상 호출")
+    @DisplayName("[view][GET] 대댓글 등록 - 정상 호출")
     @Test
-    void givenArticleCommentInfoWithParentCommentId_whenRequesting_thenSaveNewChildComment() throws Exception {
+    void givenArticleCommentInfoWithParentCommentId_whenRequesting_thenSavesNewChildComment() throws Exception {
         // Given
         long articleId = 1L;
         ArticleCommentRequest request = ArticleCommentRequest.of(articleId, 1L, "test comment");
         willDoNothing().given(articleCommentService).saveArticleComment(any(ArticleCommentDto.class));
 
-        long articleCommentId = 1L;
-        String userId = "test";
-        willDoNothing().given(articleCommentService).deleteArticleComment(articleCommentId, userId);
-
         // When & Then
         mvc.perform(
-                        post("/comments/" + articleCommentId + "/delete")
+                        post("/comments/new")
                                 .contentType(MediaType.APPLICATION_FORM_URLENCODED)
-                                .content(formDataEncoder.encode(Map.of("articleId", articleId)))
+                                .content(formDataEncoder.encode(request))
                                 .with(csrf())
                 )
                 .andExpect(status().is3xxRedirection())
                 .andExpect(view().name("redirect:/articles/" + articleId))
                 .andExpect(redirectedUrl("/articles/" + articleId));
-        then(articleCommentService).should().deleteArticleComment(articleCommentId, userId);
+        then(articleCommentService).should().saveArticleComment(any(ArticleCommentDto.class));
     }
 }
